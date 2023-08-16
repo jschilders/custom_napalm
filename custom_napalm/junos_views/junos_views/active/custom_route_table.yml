@@ -1,0 +1,29 @@
+---
+custom_route_table:
+  rpc: get-route-information
+  args:
+    extensive: True
+    active-path: True
+  args_key:
+    destination
+  item: route-table/rt/rt-entry/nh
+  #item: route-table/rt/rt-entry/nh[selected-next-hop: flag]
+  key: to
+  view: custom_route_table_view
+
+custom_route_table_view:
+  fields:
+    routing_table: ../../../table-name
+    destination: ../../rt-destination
+    prefix_length: { ../../rt-prefix-length: int}
+    next_hop: to
+    outgoing_interface: via | nh-local-interface
+    selected_next_hop: { selected-next-hop: True=selected-next-hop}
+    protocol: ../protocol-name
+    preference: { ../preference: int }
+    local_as: ../local-as
+    peer_as: ../peer-as
+    peer_id: ../peer-id
+    local_preference: { ../local-preference: int}
+    route_distinguisher: ../route-distinguisher
+    communities: ../communities/community

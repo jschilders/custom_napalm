@@ -1,0 +1,29 @@
+---
+custom_pic_details_table:
+  rpc: get-pic-detail
+  args:
+    fpc-slot: '0'
+    pic-slot: '0'
+  key: 
+    - ../../slot
+    - ../../pic-slot
+    - port-number
+  item: fpc/pic-detail/port-information/port
+  view: custom_pic_details_table_view
+
+custom_pic_details_table_view:
+  fields:
+    #fpc: ../../slot
+    #pic: ../../pic-slot
+    pic_type: ../../pic-type
+    pic_comment: ../../comment
+    #pic_asic_type: ../../asic-type
+    pic_state: ../../state
+    #port: port-number
+    cabletype: cable-type
+    fibermode: fiber-mode
+    wavelength: wavelength
+    vendor_name: sfp-vendor-name
+    vendor_partnr: sfp-vendor-pno
+    vendor_version: sfp-vendor-fw-ver
+

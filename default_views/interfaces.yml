@@ -1,0 +1,139 @@
+---
+####
+#### Interface table
+####
+
+junos_iface_table:
+  rpc: get-interface-information
+  args_key: interface_name
+  item: physical-interface
+  view: junos_iface_view
+
+junos_iface_view:
+  fields:
+    is_up: { oper-status: True=up }
+    is_enabled: { admin-status: True=up }
+    description: { description: unicode }
+    last_flapped: { interface-flapped/@seconds: int }
+    #mode: logical-interface/address-family/address-family-name
+    speed: speed
+    negotiated_speed: ethernet-autonegotiation/link-partner-speed
+    mtu: mtu
+    mac_address: current-physical-address
+
+junos_logical_iface_table:
+  rpc: get-interface-information
+  item: physical-interface/logical-interface
+  view: junos_logical_iface_view
+
+junos_logical_iface_view:
+  fields:
+    is_up: { ../oper-status: True=up }
+    # Return False if iff-down flag is present. If not is_enabled == True
+    is_enabled: { if-config-flags/iff-down: False=regex(iff-down) }
+    description: { description: unicode }
+    last_flapped: { ../interface-flapped/@seconds: int }
+    speed: ../speed
+    negotiated_speed: ../ethernet-autonegotiation/link-partner-speed
+    mtu: ../mtu
+    mac_address: ../current-physical-address
+
+
+####
+#### Interface counters
+####
+
+junos_iface_counter_table:
+  rpc: get-interface-information
+  args:
+    extensive: True
+    interface_name: '[vmfgxe][mlet]*'
+  args_key: interface_name
+  item: physical-interface
+  view: junos_iface_counter_view
+
+
+junos_iface_counter_view:
+  fields:
+    logical_interfaces: junos_logical_iface_counter_table
+  groups:
+    ts: traffic-statistics
+    rxerrs: input-error-list
+    txerrs: output-error-list
+    ethernet_traffic_types: ethernet-mac-statistics
+
+
+  # fields that are part of groups are called
+  # "fields_<group-name>"
+  fields_ethernet_traffic_types:
+    rx_broadcast_packets: { input-broadcasts: int }
+    tx_broadcast_packets: { output-broadcasts: int }
+    rx_unicast_packets: { input-unicasts: int }
+    tx_unicast_packets: { output-unicasts: int }
+    rx_multicast_packets: { input-multicasts: int }
+    tx_multicast_packets: { output-multicasts: int }
+
+  fields_ts:
+    rx_octets: { input-bytes: int }
+    tx_octets: { output-bytes: int }
+
+  fields_rxerrs:
+    rx_errors: { input-errors: int }
+    rx_discards: { input-discards: int }
+
+  fields_txerrs:
+    tx_errors: { output-errors: int }
+    tx_discards: { output-drops: int }
+
+junos_logical_iface_counter_table:
+  item: logical-interface
+  view: junos_logical_iface_counter_view
+
+junos_logical_iface_counter_view:
+  groups:
+    ts: traffic-statistics
+    rxerrs: input-error-list
+    txerrs: output-error-list
+    ethernet_traffic_types: ethernet-mac-statistics
+
+
+  # fields that are part of groups are called
+  # "fields_<group-name>"
+  fields_ethernet_traffic_types:
+    rx_broadcast_packets: { input-broadcasts: int }
+    tx_broadcast_packets: { output-broadcasts: int }
+    rx_unicast_packets: { input-unicasts: int }
+    tx_unicast_packets: { output-unicasts: int }
+    rx_multicast_packets: { input-multicasts: int }
+    tx_multicast_packets: { output-multicasts: int }
+
+  fields_ts:
+    rx_octets: { input-bytes: int }
+    tx_octets: { output-bytes: int }
+
+  fields_rxerrs:
+    rx_errors: { input-errors: int }
+    rx_discards: { input-discards: int }
+
+  fields_txerrs:
+    tx_errors: { output-errors: int }
+    tx_discards: { output-drops: int }
+
+
+###
+### Interfaces IPs
+###
+
+junos_ip_interfaces_table:
+  rpc: get-interface-information
+  item: physical-interface/logical-interface/address-family/interface-address
+  args:
+    terse: True
+  key: ifa-local
+  view: junos_ip_interfaces_view
+
+junos_ip_interfaces_view:
+  fields:
+    family: ../address-family-name
+    interface: ../../name
+

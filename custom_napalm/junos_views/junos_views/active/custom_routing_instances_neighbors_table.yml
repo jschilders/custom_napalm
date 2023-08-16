@@ -1,0 +1,35 @@
+---
+custom_routing_instances_neighbors_table:
+  get: routing-instances/instance/protocols/bgp/group/neighbor
+  view: custom_routing_instances_neighbors_table_view
+
+custom_routing_instances_neighbors_table_view:
+  #groups:
+  #  vrf: ../../../..
+  #  grp: ..
+  fields:
+    vrf_name: ../../../../name
+    group_name: ../name
+    neighbor_name: name
+    neighbor_description: description
+    bgp_import_policy: import | ../import
+    bgp_export_policy: export | ../export
+  #fields_grp:
+  #  group_name2: name
+  #  bgp_type: type
+  #  log_updown: { log-updown: flag }
+  #  remove_private: { remove_private/all: flag }
+  #  multipath: { multipath: flag }
+  #  peer_as: peer-as
+  #fields_vrf:
+  #  vrf2_name: name
+  #  route_distinguisher: route-distinguisher/rd-type
+  #  vrf_import_policy: vrf-import
+  #  vrf_export_policy: vrf-export
+  #  vrf_target: vrf-target/community
+  #  vrf_label: vrf-table-label
+  #  propagate_ttl: {no-vrf-propagate-ttl: flag }
+
+
+
+

@@ -1,0 +1,19 @@
+---
+custom_transceiver_table:
+  rpc: get-chassis-inventory
+  item: //*[starts-with(name,"Xcvr")]
+  key:
+    - ancestor::*[starts-with(name,'FPC')]/name
+    - ancestor::*[starts-with(name,'PIC')]/name
+    - name
+  view: custom_transceiver_table_view
+
+custom_transceiver_table_view:
+  fields:
+    #fpc: ancestor::*[starts-with(name,'FPC')]/name
+    #pic: ancestor::*[starts-with(name,'PIC')]/name
+    #port: name
+    serial_number: serial-number
+    part_number: part-number
+    version: version
+    type: description

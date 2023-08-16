@@ -1,0 +1,16 @@
+---
+custom_routing_instances_table:
+  get: routing-instances/instance
+  view: custom_routing_instances_view
+
+custom_routing_instances_view:
+  fields:
+    instance_name: name
+    instance_type: instance-type
+    interfaces: interface/name | bridge-domains/domain/interface/name
+    route_distinguisher: route-distinguisher/rd-type
+    vrf_target: vrf-target/community
+    vrf_import_policy: vrf-import
+    vrf_export_policy: vrf-export
+    vrf_tabler_label: vrf-table-label
+

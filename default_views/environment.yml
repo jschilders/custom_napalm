@@ -1,0 +1,44 @@
+---
+junos_environment_table:
+  rpc: get-environment-information
+  args:
+  item: environment-item
+  key: name
+  view: junos_environment_view
+
+junos_environment_table_srx_cluster:
+  rpc: get-environment-information
+  args:
+    node: primary
+  item: multi-routing-engine-item/environment-information/environment-item
+  key: name
+  view: junos_environment_view
+
+junos_environment_view:
+  fields:
+    class: class
+    status: status
+    temperature: { temperature/@celsius: int }
+
+junos_temperature_thresholds:
+  rpc: get-temperature-threshold-information
+  args:
+  item: temperature-threshold
+  key: name
+  view: junos_temperature_thresholds_view
+
+junos_temperature_thresholds_srx_cluster:
+  rpc: get-temperature-threshold-information
+  args:
+    node: primary
+  item: multi-routing-engine-item/temperature-threshold-information/temperature-threshold
+  key: name
+  view: junos_temperature_thresholds_view
+
+junos_temperature_thresholds_view:
+  fields:
+    name: name
+    yellow-alarm: { yellow-alarm: int }
+    red-alarm: { red-alarm: int }
+    tx_discards: { output-drops: int }
+

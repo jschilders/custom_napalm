@@ -1,0 +1,25 @@
+---
+RouteSummaryTable:
+  rpc: get-route-summary-information
+  item: route-table
+  key: table-name
+  view: RouteSummaryView
+
+RouteSummaryView:
+  fields:
+    dests: { destination-count : int }
+    total: { total-route-count : int }
+    active: { active-route-count : int }
+    holddown: { holddown-route-count : int }
+    hidden: { hidden-route-count : int }
+    proto: _rspTable 
+
+_rspTable:
+  item: protocols
+  key: protocol-name
+  view: _rspView
+
+_rspView:
+  fields:
+    count: { protocol-route-count: int }
+    active: { active-route-count : int }

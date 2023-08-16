@@ -1,0 +1,12 @@
+---
+OSPFIOStatsTable:
+  rpc: get-ospf-io-statistics-information
+  item: ospf-io-statistics
+  key: packets-read
+  view: OSPFIOStatsView
+
+OSPFIOStatsView:
+  fields:
+    packets_read: packets-read
+    average_per_run: average-per-run
+    max_run: max-run

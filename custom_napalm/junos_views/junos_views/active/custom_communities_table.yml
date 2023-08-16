@@ -1,0 +1,10 @@
+---
+custom_communities_table:
+  get: policy-options/community
+  view: custom_communities_table_view
+
+custom_communities_table_view:
+  fields:
+    community_name: name
+    members: members
+

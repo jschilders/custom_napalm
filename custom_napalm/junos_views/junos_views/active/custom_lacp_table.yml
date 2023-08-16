@@ -1,0 +1,12 @@
+---
+custom_lacp_table:
+  rpc: get-lacp-interface-information
+  item: lacp-interface-information/lag-lacp-header
+  key: aggregate-name
+  view: custom_lacp_table_view
+
+custom_lacp_table_view:
+  fields:
+    parent_interface: aggregate-name
+    child_interfaces: ../lag-lacp-protocol/name
+

@@ -1,0 +1,10 @@
+---
+custom_prefix_lists_table:
+  get: policy-options/prefix-list
+  view: custom_prefix_lists_table_view
+
+custom_prefix_lists_table_view:
+  fields:
+    prefixlist_name: name
+    apply_path: apply-path
+    prefixes: prefix-list-item/name

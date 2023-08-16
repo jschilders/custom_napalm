@@ -1,0 +1,13 @@
+---
+ospfTable:
+ rpc: get-ospf-overview-information
+ item: ospf-overview
+ key: ospf-area-overview/ospf-area
+ view: ospfView
+
+ospfView:
+ fields:
+  router_id: ospf-router-id
+  area: ospf-area-overview/ospf-area
+  neighbors: ospf-area-overview/ospf-nbr-up-count
+

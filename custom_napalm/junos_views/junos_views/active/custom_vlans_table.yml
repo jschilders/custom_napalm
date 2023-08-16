@@ -1,0 +1,10 @@
+---
+custom_vlans_table:
+  get: vlans/vlan
+  view: custom_vlans_table_view
+
+custom_vlans_table_view:
+  fields:
+    name: name
+    description: description
+    vlan_id: {vlan-id: int}
