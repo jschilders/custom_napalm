@@ -3,8 +3,8 @@ from custom_napalm.junos_views import junos_views
 
 from rich import print
 
-from secrets import USERNAME, PASSWORD
-#from lib.secrets import USERNAME, PASSWORD
+
+
 
 all = {}
 junos_driver = get_network_driver('junos')
@@ -25,10 +25,10 @@ device.open()
 #k = device.custom_physical_interfaces_table()
 
 #print('custom_transceiver_table')
-#j = device.custom_transceiver_table()
+j = device.custom_transceiver_table()
 
 #print('custom_pic_details_table')
-#i = device.custom_pic_details_table(fpc_slot=0, pic_slot=0)
+i = device.custom_pic_details_table(fpc_slot=0, pic_slot=0)
 
 #print('custom_lacp_table')
 #h = device.custom_lacp_table()
@@ -48,6 +48,6 @@ device.open()
 #print('custom_routing_instances_neighbors_table')
 #c = device.custom_routing_instances_neighbors_table()
 
-print('custom_route_table')
-b = device.custom_route_table()
+#print('custom_route_table')
+#b = device.custom_route_table()
 

@@ -26,6 +26,37 @@ class CustomJunosDriver(JunOSDriver):
         return [ dict(interface) for interface in physical_interfaces_table ]
 
 
+    def custom_detailed_transceiver_table(self):
+        transceiver_table = self.custom_transceiver_table()
+
+        pic_details_table =  { 
+            # create a table of all details retrieved from all 
+            # 'pic_details_tables' with 'if_suffix' as the key
+            pic.pop('if_suffix'):pic 
+            for fpc in [
+                # get pic table for each fpc/pic tuple 
+                # found below in transceiver table
+                self.custom_pic_details_table(fpc_slot=fpc, pic_slot=pic)
+                for fpc, pic in sorted(
+                    {
+                        # if_suffix '1/2/3' -> (fpc, pic, port)
+                        # so if_suffix '1/2/3' -> (fpc, pic (1,2)
+                        ( transceiver['if_suffix'].split('/')[0], transceiver['if_suffix'].split('/')[1] )
+                        for transceiver in transceiver_table 
+                    }
+                )
+            ]
+            for pic in fpc
+        }
+
+        return [ 
+            # join each entry in the transceiver table with a matching 
+            # entry from the pic_details_table. Match on 'if_suffix'
+            { **transceiver, **pic_details_table[transceiver['if_suffix']] }
+            for transceiver in transceiver_table
+        ]
+    
+
     def custom_transceiver_table(self):
         def make_table_rows(k,v):
             fpc, pic, port = k
@@ -43,7 +74,6 @@ class CustomJunosDriver(JunOSDriver):
             fpc, pic, port = k
             if_name = f"{fpc}/{pic}/{port}"
             return {'if_suffix': if_name, **dict(v)}
-
         fpc_slot = str(fpc_slot)
         pic_slot = str(pic_slot)
         pic_table = junos_views.custom_pic_details_table(self.device).get(fpc_slot=fpc_slot, pic_slot=pic_slot)
