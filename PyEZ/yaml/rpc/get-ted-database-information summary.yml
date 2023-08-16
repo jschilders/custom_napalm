@@ -1,0 +1,10 @@
+---
+TedSummaryTable:
+  rpc: get-ted-database-information
+  item: ted-database-summary
+  view: TedSummaryView
+
+TedSummaryView:
+  fields:
+    iso-count: { ted-database-iso-count : int }
+    inet-count: { ted-database-inet-count : int }

@@ -1,0 +1,11 @@
+---
+OspfRoutesTable:
+ rpc: get-ospf-route-information
+ item: ospf-topology-route-table/ospf-route
+ key: ospf-route-entry/address-prefix
+ view: OspfRoutesView
+
+OspfRoutesView:
+ fields:
+  prefix: ospf-route-entry/address-prefix
+  interface: ospf-route-entry/ospf-next-hop/next-hop-name/interface-name

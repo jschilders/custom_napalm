@@ -1,0 +1,12 @@
+---
+OSPFStatsTable:
+  rpc: get-ospf-statistics-information
+  item: ospf-statistics/packet-statistics
+  key: ospf-packet-type
+  view: OSPFStatsView
+
+OSPFStatsView:
+  fields:
+    packets_sent: packets-sent
+    packets_received: packets-received
+    packets_sent_5seconds: packets-sent-5seconds

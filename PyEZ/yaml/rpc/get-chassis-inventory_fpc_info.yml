@@ -1,0 +1,22 @@
+---
+FpcInfoTable:
+    rpc: get-fpc-information
+    item: .//fpc
+    key: slot
+    view: _fpc_info_view
+
+FpcMiReInfoTable:
+    rpc: get-fpc-information
+    item: .//fpc
+    key: 
+        - ancestor::multi-routing-engine-item/re-name
+        - slot
+    view: _fpc_info_view
+
+_fpc_info_view:
+    fields:
+        state: state
+        memory: memory-heap-utilization
+        cpu: cpu-total
+
+
