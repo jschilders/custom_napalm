@@ -27,8 +27,9 @@ class CustomJunosDriver(JunOSDriver):
 
 
     def custom_detailed_transceiver_table(self):
+        # Create a detailed interface table, combining data from the physical_interfaces_table, 
+        # the custom_transceiver_table and the custom_pic_details_table
         transceiver_table = self.custom_transceiver_table()
-
         pic_details_table =  { 
             # create a table of all details retrieved from all 
             # 'pic_details_tables' with 'if_suffix' as the key
@@ -48,14 +49,21 @@ class CustomJunosDriver(JunOSDriver):
             ]
             for pic in fpc
         }
-
-        return [ 
+        combined_table = { 
             # join each entry in the transceiver table with a matching 
             # entry from the pic_details_table. Match on 'if_suffix'
-            { **transceiver, **pic_details_table[transceiver['if_suffix']] }
+            transceiver['if_suffix']: { **transceiver, **pic_details_table[transceiver['if_suffix']] }
             for transceiver in transceiver_table
+        }
+        return [ 
+            # join each entry in the interfaces table with a matching 
+            # entry from the transceiver table. Match on 'if_suffix' 
+            # and the part of 'physical_interface' after the dash
+            { **interface, **combined_table[if_prefix] }
+            for interface in self.custom_physical_interfaces_table()
+            if (if_prefix := interface.get('physical_interface', '').rsplit('-')[-1]) in pic_details_table
         ]
-    
+
 
     def custom_transceiver_table(self):
         def make_table_rows(k,v):
