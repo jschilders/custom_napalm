@@ -29,11 +29,11 @@ class CustomJunosDriver(JunOSDriver):
     def custom_detailed_transceiver_table(self):
         # Create a detailed interface table, combining data from the physical_interfaces_table, 
         # the custom_transceiver_table and the custom_pic_details_table
-        transceiver_table = self.custom_transceiver_table()
-        pic_details_table =  { 
+        transceiver_table = { transceiver.pop('if_suffix'): transceiver for transceiver in self.custom_transceiver_table() }
+        details_table =  { 
             # create a table of all details retrieved from all 
-            # 'pic_details_tables' with 'if_suffix' as the key
-            pic.pop('if_suffix'):pic 
+            # 'details_tables' with 'if_suffix' as the key
+            pic['if_suffix']: { **transceiver_table[pic.pop('if_suffix')] , **pic}
             for fpc in [
                 # get pic table for each fpc/pic tuple 
                 # found below in transceiver table
@@ -42,26 +42,19 @@ class CustomJunosDriver(JunOSDriver):
                     {
                         # if_suffix '1/2/3' -> (fpc, pic, port)
                         # so if_suffix '1/2/3' -> (fpc, pic (1,2)
-                        ( transceiver['if_suffix'].split('/')[0], transceiver['if_suffix'].split('/')[1] )
-                        for transceiver in transceiver_table 
+                        tuple(transceiver_table_keys.split('/')[:2])
+                        for transceiver_table_keys in transceiver_table 
                     }
                 )
             ]
             for pic in fpc
         }
-        combined_table = { 
-            # join each entry in the transceiver table with a matching 
-            # entry from the pic_details_table. Match on 'if_suffix'
-            transceiver['if_suffix']: { **transceiver, **pic_details_table[transceiver['if_suffix']] }
-            for transceiver in transceiver_table
-        }
         return [ 
             # join each entry in the interfaces table with a matching 
             # entry from the transceiver table. Match on 'if_suffix' 
             # and the part of 'physical_interface' after the dash
-            { **interface, **combined_table[if_prefix] }
+            { **interface, **details_table.get(interface['physical_interface'].rsplit('-')[-1], {}) }
             for interface in self.custom_physical_interfaces_table()
-            if (if_prefix := interface.get('physical_interface', '').rsplit('-')[-1]) in pic_details_table
         ]
 
 
