@@ -1,14 +1,8 @@
 from napalm import get_network_driver
 from custom_napalm.junos_views import junos_views
-
+from secrets import USERNAME, PASSWORD
 from rich import print
-
-
-
-
-all = {}
 junos_driver = get_network_driver('junos')
-
 device = junos_driver(hostname='br1.gs.network.is.nl', username=USERNAME, password=PASSWORD, timeout=900)
 device.open()
 
