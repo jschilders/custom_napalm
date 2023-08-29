@@ -10,6 +10,9 @@ class CustomJunosDriver(JunOSDriver):
         local_route_table = junos_views.custom_local_route_table(self.device).get()
         return [ dict(local_route) for local_route in local_route_table ]
 
+    def custom_direct_route_table(self):
+        direct_route_table = junos_views.custom_direct_route_table(self.device).get()
+        return [ dict(direct_route) for direct_route in direct_route_table ]
 
     def custom_interface_address_table(self):
         interface_address_table = junos_views.custom_interface_address_table(self.device).get()
@@ -26,7 +29,7 @@ class CustomJunosDriver(JunOSDriver):
         return [ dict(interface) for interface in physical_interfaces_table ]
 
 
-    def custom_detailed_transceiver_table(self):
+    def custom_detailed_interfaces_table(self):
         # Create a detailed interface table, combining data from the physical_interfaces_table, 
         # the custom_transceiver_table and the custom_pic_details_table
         transceiver_table = { transceiver.pop('if_suffix'): transceiver for transceiver in self.custom_transceiver_table() }

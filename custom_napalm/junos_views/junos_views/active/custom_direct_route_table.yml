@@ -1,0 +1,14 @@
+---
+custom_direct_route_table:
+  rpc: get-route-information
+  args:
+    protocol: local
+  item: route-table/rt
+  key: rt-destination
+  view: custom_direct_route_table_view
+
+custom_direct_route_table_view:
+  fields:
+    destination: rt-destination
+    interface: rt-entry/nh/nh-local-interface
+    routing_table: ../table-name

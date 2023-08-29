@@ -16,4 +16,4 @@ custom_transceiver_table_view:
     serial_number: serial-number
     part_number: part-number
     version: version
-    type: description
+    transceiver_type: description

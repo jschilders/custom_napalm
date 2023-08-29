@@ -13,7 +13,7 @@ custom_physical_interfaces_table_view:
     link_up : { oper-status: True=up}
     admin_up : { admin-status: True=up }
     description: description
-    mtu: mtu
+    mtu: { mtu: int }
     speed: speed
     duplex: duplex | link-mode
     mac_address: current-physical-address
