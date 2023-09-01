@@ -6,5 +6,5 @@ custom_communities_table:
 custom_communities_table_view:
   fields:
     community_name: name
-    members: members
+    route_target: members
 
