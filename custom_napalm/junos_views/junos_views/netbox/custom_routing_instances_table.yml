@@ -5,8 +5,8 @@ custom_routing_instances_table:
 
 custom_routing_instances_view:
   fields:
-    instance_name: name
-    instance_type: instance-type
+    vrf_name: name
+    vrf_type: instance-type
     interfaces: interface/name | bridge-domains/domain/interface/name
     route_distinguisher: route-distinguisher/rd-type
     route_target: vrf-target/community

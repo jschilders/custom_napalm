@@ -17,8 +17,8 @@ custom_interface_address_table_view:
     address_family: ../address-family-name
     mtu: ../mtu
     route_table: ../route-table
-    physical_interface: ../../../name
-    logical_interface: ../../name
+    parent_interface: ../../../name
+    interface: ../../name
     description:  ../../description
     if_up: { ../../if-config-flags/iff-up: flag }
     primary: { ifa-flags/ifaf-current-preferred: flag}

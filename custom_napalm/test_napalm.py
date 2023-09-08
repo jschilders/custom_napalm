@@ -1,10 +1,21 @@
 from napalm import get_network_driver
 from custom_napalm.junos_views import junos_views
-from lib.secrets import USERNAME, PASSWORD
+from lib.helpers.secrets import USERNAME, PASSWORD
 from rich import print
 junos_driver = get_network_driver('junos')
 device = junos_driver(hostname='br1.gs.network.is.nl', username=USERNAME, password=PASSWORD, timeout=900)
 device.open()
+
+#print('custom_detailed_interfaces_table')
+#p = device.custom_detailed_interfaces_table()
+
+#print('custom_logical_interfaces_table')
+#l = device.custom_logical_interfaces_table()
+
+#print('custom_physical_interfaces_table')
+#k = device.custom_physical_interfaces_table()
+
+
 
 #print('custom_direct_route_table')
 #o = device.custom_direct_route_table()
@@ -12,8 +23,9 @@ device.open()
 #print('custom_local_route_table')
 #n = device.custom_local_route_table()
 
-#print('custom_interface_address_table')
-#m = device.custom_interface_address_table()
+
+print('custom_interface_address_table')
+m = device.custom_interface_address_table()
 
 #print('custom_logical_interfaces_table')
 #l = device.custom_logical_interfaces_table()

@@ -9,7 +9,7 @@ custom_physical_interfaces_table:
 
 custom_physical_interfaces_table_view:
   fields:
-    physical_interface: name
+    interface_name: name
     link_up : { oper-status: True=up}
     admin_up : { admin-status: True=up }
     description: description

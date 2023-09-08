@@ -13,11 +13,11 @@ custom_logical_interfaces_table:
 
 custom_logical_interfaces_table_view:
   fields:
-    physical_interface: ../name
-    logical_interface: name
+    parent_interface_name: ../name
+    interface_name: name
     description:  description
     if_up: { if-config-flags/iff-up: flag }
     link_address: link-address
     encapsulation: encapsulation
-    lag_children: lag-traffic-statistics/lag-link/name
-    lag_parent: address-family/ae-bundle-name
+    #lag_children: lag-traffic-statistics/lag-link/name
+    #lag_parent: address-family/ae-bundle-name

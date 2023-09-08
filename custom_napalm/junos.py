@@ -10,9 +10,11 @@ class CustomJunosDriver(JunOSDriver):
         local_route_table = junos_views.custom_local_route_table(self.device).get()
         return [ dict(local_route) for local_route in local_route_table ]
 
+
     def custom_direct_route_table(self):
         direct_route_table = junos_views.custom_direct_route_table(self.device).get()
         return [ dict(direct_route) for direct_route in direct_route_table ]
+
 
     def custom_interface_address_table(self):
         interface_address_table = junos_views.custom_interface_address_table(self.device).get()
@@ -56,7 +58,7 @@ class CustomJunosDriver(JunOSDriver):
             # join each entry in the interfaces table with a matching 
             # entry from the transceiver table. Match on 'if_suffix' 
             # and the part of 'physical_interface' after the dash
-            { **interface, **details_table.get(interface['physical_interface'].rsplit('-')[-1], {}) }
+            { **interface, **details_table.get(interface['interface_name'].rsplit('-')[-1], {}) }
             for interface in self.custom_physical_interfaces_table()
         ]
 
@@ -118,6 +120,14 @@ class CustomJunosDriver(JunOSDriver):
         route_table = junos_views.custom_route_table(self.device).get()
         return [ dict(route) for route in route_table]
 
+
+    def custom_local_route_table(self):
+        local_route_table = junos_views.custom_local_route_table(self.device).get()
+        return [ dict(local_route) for local_route in local_route_table if re.match(r'(.*\.)?inet(6)?.0', local_route.routing_table) ]
+
+    def custom_direct_route_table(self):
+        direct_route_table = junos_views.custom_direct_route_table(self.device).get()
+        return [ dict(direct_route) for direct_route in direct_route_table if re.match(r'(.*\.)?inet(6)?.0', direct_route.routing_table) ]
 
     def custom_route_table(self):
         raw_route_table = junos_views.custom_route_table(self.device).get()

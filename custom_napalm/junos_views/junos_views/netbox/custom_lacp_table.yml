@@ -7,6 +7,6 @@ custom_lacp_table:
 
 custom_lacp_table_view:
   fields:
-    parent_interface: aggregate-name
-    child_interfaces: ../lag-lacp-protocol/name
+    lag_parent: aggregate-name
+    lag_children: ../lag-lacp-protocol/name
 
